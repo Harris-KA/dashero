@@ -2,7 +2,7 @@
 
 # URL for your monerod RPC server
 # Default for mainnet running locally:
-MONEROD_RPC_URL = "	http://10.0.0.45:18081/json_rpc"
+MONEROD_RPC_URL = "http://10.0.0.45:18081/json_rpc"
 
 # Example for testnet running locally:
 # MONEROD_RPC_URL = "http://127.0.0.1:28081/json_rpc"
