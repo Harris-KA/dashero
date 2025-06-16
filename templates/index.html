@@ -77,8 +77,8 @@
             <div class="row row-cards">
               <!-- Status -->
               <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
+                <div class="card card-sm">
+                  <div class="card-body">
                     <div class="d-flex align-items-center">
                       <span
                         class="avatar me-2 bg-orange-lt text-orange"
@@ -103,12 +103,18 @@
 
               <!-- Blockchain Height -->
               <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="d-flex flex-column">
-                      <div class="h3 mb-0">{{ "{:,}".format(data.height) }}</div>
-                      <small class="text-muted">Blockchain Height</small>
-                      <div class="mt-2">
+                <div class="card card-sm">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <span class="avatar me-2 bg-blue-lt text-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6a8 3 0 0 0 16 0V6"/><path d="M4 12v6a8 3 0 0 0 16 0v-6"/></svg>
+                      </span>
+                      <div class="flex-fill">
+                        <div class="h3 mb-0">{{ "{:,}".format(data.height) }}</div>
+                        <small class="text-muted">Blockchain Height</small>
+                      </div>
+                    </div>
+                    <div class="mt-2">
                         <div class="progress h-2" style="height: 6px">
                           <div
                             class="progress-bar bg-success"
@@ -127,67 +133,106 @@
               </div>
 
               <!-- Difficulty -->
-              <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="h3 mb-0">{{ "{:,}".format(data.difficulty) }}</div>
-                    <small class="text-muted">Difficulty</small>
+                <div class="col-6 col-md-3">
+                  <div class="card card-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar me-2 bg-purple-lt text-purple">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="6" cy="10" r="2"/><line x1="6" y1="4" x2="6" y2="8"/><line x1="6" y1="12" x2="6" y2="20"/><circle cx="12" cy="16" r="2"/><line x1="12" y1="4" x2="12" y2="14"/><line x1="12" y1="18" x2="12" y2="20"/><circle cx="18" cy="7" r="2"/><line x1="18" y1="4" x2="18" y2="5"/><line x1="18" y1="9" x2="18" y2="20"/></svg>
+                        </span>
+                        <div>
+                          <div class="h3 mb-0">{{ "{:,}".format(data.difficulty) }}</div>
+                          <small class="text-muted">Difficulty</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               <!-- Hash Rate -->
-              <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="h3 mb-0">{{ data.hash_rate_formatted }}</div>
-                    <small class="text-muted">Network Hash&nbsp;Rate</small>
+                <div class="col-6 col-md-3">
+                  <div class="card card-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar me-2 bg-red-lt text-red">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-activity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="3 12 9 12 12 3 15 21 18 12 21 12"/></svg>
+                        </span>
+                        <div>
+                          <div class="h3 mb-0">{{ data.hash_rate_formatted }}</div>
+                          <small class="text-muted">Network Hash&nbsp;Rate</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               <!-- Transaction Pool -->
-              <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="h3 mb-0">{{ "{:,}".format(data.tx_pool_size) }}</div>
-                    <small class="text-muted">Tx&nbsp;Pool</small>
+                <div class="col-6 col-md-3">
+                  <div class="card card-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar me-2 bg-green-lt text-green">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-inbox" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 13h3l3 3h4l3-3h3"/></svg>
+                        </span>
+                        <div>
+                          <div class="h3 mb-0">{{ "{:,}".format(data.tx_pool_size) }}</div>
+                          <small class="text-muted">Tx&nbsp;Pool</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               <!-- Connections -->
-              <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="h3 mb-0">{{ data.total_connections }}</div>
-                    <small class="text-muted"
-                      >Connections ({{ data.incoming_connections_count }} In /
-                      {{ data.outgoing_connections_count }} Out)</small
-                    >
+                <div class="col-6 col-md-3">
+                  <div class="card card-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar me-2 bg-teal-lt text-teal">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plug-connected" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 16l-2 2l-4 -4l-4 4l-2 -2l4 -4l-4 -4l2 -2l4 4l4 -4l2 2l-4 4z"/></svg>
+                        </span>
+                        <div>
+                          <div class="h3 mb-0">{{ data.total_connections }}</div>
+                          <small class="text-muted">Connections ({{ data.incoming_connections_count }} In / {{ data.outgoing_connections_count }} Out)</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               <!-- Daemon Version -->
-              <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="h3 mb-0">{{ data.version }}</div>
-                    <small class="text-muted">{{ data.nettype.capitalize() }} Network</small>
+                <div class="col-6 col-md-3">
+                  <div class="card card-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar me-2 bg-cyan-lt text-cyan">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12.01" y2="8"/><polyline points="11 12 12 12 12 16 13 16"/></svg>
+                        </span>
+                        <div>
+                          <div class="h3 mb-0">{{ data.version }}</div>
+                          <small class="text-muted">{{ data.nettype.capitalize() }} Network</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               <!-- Uptime -->
-              <div class="col-6 col-md-3">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="h3 mb-0">{{ data.uptime_formatted }}</div>
-                    <small class="text-muted">Uptime</small>
+                <div class="col-6 col-md-3">
+                  <div class="card card-sm">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <span class="avatar me-2 bg-yellow-lt text-yellow">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+                        </span>
+                        <div>
+                          <div class="h3 mb-0">{{ data.uptime_formatted }}</div>
+                          <small class="text-muted">Uptime</small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
             </div>
 
             <!-- Connections Table -->
