@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Auto‑refresh -->
+    <meta http-equiv="refresh" content="{{ refresh_interval }}" />
+    <title>Dashero – Monero Dashboard</title>
+
+    <!-- Tabler Core -->
+    <link
+      href="https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css"
+      rel="stylesheet"
+    />
+    <script defer src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
+
+    <!-- Google Font Roboto (optional) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        /* brand accent */
+        --monero-orange: #ff6c00;
+      }
+      body {
+        font-family: "Roboto", var(--tblr-font-sans-serif);
+        background-color: var(--tblr-bg-surface-secondary);
+      }
+      .brand-logo {
+        height: 32px;
+      }
+      .progress-percentage {
+        font-size: 0.9rem;
+        color: var(--tblr-color-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Navbar -->
+      <header class="navbar navbar-expand-md navbar-light d-print-none">
+        <div class="container-xl">
+          <a class="navbar-brand" href="#">
+            <img
+              src="https://www.getmonero.org/press-kit/symbols/monero-symbol-on-white-480.png"
+              alt="Monero logo"
+              class="brand-logo me-2"
+            />
+            <span class="fw-bold" style="color: var(--monero-orange)">Dashero</span>
+          </a>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="page-body">
+          <div class="container-xl">
+            {% if error %}
+            <!-- Error Alert -->
+            <div class="alert alert-important alert-danger" role="alert">
+              <div class="d-flex">
+                <div>
+                  <h4 class="alert-title">Error connecting to monerod</h4>
+                  <div class="text-muted">
+                    {{ error }}<br />Ensure monerod is running and the RPC URL in
+                    <code>config.py</code> is correct.
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% elif data %}
+            <!-- Stats Cards -->
+            <div class="row row-cards">
+              <!-- Status -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="d-flex align-items-center">
+                      <span
+                        class="avatar me-2 bg-orange-lt text-orange"
+                        ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-plug
+" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 3l0 5" /><path d="M18 3l0 5" /><path d="M6 15l0 6" /><path d="M18 15l0 6" /><path d="M5 8h14l-1 4h-12z" /><path d="M7 15h10" /></svg></span>
+                      <div>
+                        <div class="h3 mb-0">
+                          {% if data.synchronized %}
+                          <span class="badge bg-success">Synced</span>
+                          {% else %}
+                          <span class="badge bg-warning">Syncing</span>
+                          {% endif %}
+                        </div>
+                        <small class="text-muted">Status</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Blockchain Height -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="d-flex flex-column">
+                      <div class="h3 mb-0">{{ "{:,}".format(data.height) }}</div>
+                      <small class="text-muted">Blockchain Height</small>
+                      <div class="mt-2">
+                        <div class="progress h-2" style="height: 6px">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: {{ data.sync_percentage }}%"
+                            role="progressbar"
+                          ></div>
+                        </div>
+                        <div class="progress-percentage mt-1">
+                          {{ data.sync_percentage | round(1) }}% (target {{
+                          "{:,}".format(data.target_height) }})
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Difficulty -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="h3 mb-0">{{ "{:,}".format(data.difficulty) }}</div>
+                    <small class="text-muted">Difficulty</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hash Rate -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="h3 mb-0">{{ data.hash_rate_formatted }}</div>
+                    <small class="text-muted">Network Hash&nbsp;Rate</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Transaction Pool -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="h3 mb-0">{{ "{:,}".format(data.tx_pool_size) }}</div>
+                    <small class="text-muted">Tx&nbsp;Pool</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Connections -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="h3 mb-0">{{ data.total_connections }}</div>
+                    <small class="text-muted"
+                      >Connections ({{ data.incoming_connections_count }} In /
+                      {{ data.outgoing_connections_count }} Out)</small
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Daemon Version -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="h3 mb-0">{{ data.version }}</div>
+                    <small class="text-muted">{{ data.nettype.capitalize() }} Network</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Uptime -->
+              <div class="col-6 col-md-3">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="h3 mb-0">{{ data.uptime_formatted }}</div>
+                    <small class="text-muted">Uptime</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Connections Table -->
+            {% if connections is defined and connections is not none %}
+            <div class="card mt-4">
+              <div class="card-header">
+                <h3 class="card-title">
+                  Peer Connections ({{ connections | length }})
+                </h3>
+              </div>
+              <div class="table-responsive">
+                {% if connections %}
+                <table class="table table-vcenter card-table">
+                  <thead>
+                    <tr>
+                      <th>Direction</th>
+                      <th>IP Address</th>
+                      <th>Sent</th>
+                      <th>Received</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for conn in connections %}
+                    <tr>
+                      <td>
+                        {% if conn.incoming %}
+                        <span class="status status-success"></span> Incoming
+                        {% else %}
+                        <span class="status status-blue"></span> Outgoing
+                        {% endif %}
+                      </td>
+                      <td class="font-monospace">{{ conn.address }}</td>
+                      <td>{{ conn.send_count_formatted }}</td>
+                      <td>{{ conn.recv_count_formatted }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% else %}
+                <div class="card-body text-center text-muted">
+                  No active peer connections.
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+              No data received from daemon. Check logs.
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                Last Update: <span id="last-update-time">{{ current_time }}</span>
+                • Auto-refresh every {{ refresh_interval }}s
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
